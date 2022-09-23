@@ -2,7 +2,7 @@ pandas
 torch
 torchvision
 numpy
-PIL
+Pillow
 streamlit
 streamlit_drawable_canvas
 sklearn.preprocessing
