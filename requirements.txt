@@ -1,6 +1,6 @@
 pandas
 torch
-torch.nn
+torch
 torch.utils.data
 torchvision.transforms
 torchvision.datasets
