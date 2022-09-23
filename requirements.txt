@@ -5,6 +5,4 @@ numpy
 Pillow
 streamlit
 streamlit_drawable_canvas
-sklearn.preprocessing
-sklearn.model_selection
-sklearn.linear_model
+sklearn
