@@ -1,0 +1,13 @@
+pandas
+torch
+torch.nn
+torch.utils.data
+torchvision.transforms
+torchvision.datasets
+numpy
+PIL
+streamlit
+streamlit_drawable_canvas
+sklearn.preprocessing
+sklearn.model_selection
+sklearn.linear_model
