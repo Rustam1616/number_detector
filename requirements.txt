@@ -1,7 +1,6 @@
 pandas
 torch
-torchvision.transforms
-torchvision.datasets
+torchvision
 numpy
 PIL
 streamlit
