@@ -16,7 +16,7 @@ from sklearn.linear_model import LogisticRegression
 st.markdown(""" <style> .font {
 font-size:30px ; font-family: 'Tahoma'; color: #FF9633;} 
 </style> """, unsafe_allow_html=True)
-st.markdown('<p class="font">Please, write a number on the board.</p>', unsafe_allow_html=True)
+st.markdown('<p class="font">Please, write two numbers on the board.</p>', unsafe_allow_html=True)
 
 # Model loading
 class ConvNet(nn.Module):
@@ -50,7 +50,7 @@ model.load_state_dict(torch.load(r"Modelconv_net_model.ckpt",map_location=torch.
 model.to(device)
 
 # Canvas parameters
-stroke_width = st.sidebar.slider("Marker width: ", 10, 45, 30)
+stroke_width = st.sidebar.slider("Marker width: ", 10, 45, 20)
 stroke_color = st.sidebar.color_picker("Marker color: ", "#eee")
 bg_color = st.sidebar.color_picker("Background color: ")
 realtime_update = st.sidebar.checkbox("Update in realtime", True)
@@ -62,8 +62,8 @@ canvas_result = st_canvas(
     stroke_color=stroke_color,
     background_color=bg_color,
     update_streamlit=realtime_update,
-    height=300,
-    width = 300,
+    height=200,
+    width = 400,
     drawing_mode="freedraw",
     key="canvas",
 )
@@ -84,7 +84,26 @@ def pre_image(image_path,model):
 # Converting to grayscale
 def rgb2gray(rgb):
     return np.dot(rgb[...,:3], [0.299, 0.587, 0.144])
-# Result :)
-if canvas_result.image_data is not None:
-    st.subheader('This number is:{}'.format(pre_image(rgb2gray(canvas_result.image_data),model)))
 
+# Finding the treshold between numbers
+if canvas_result.image_data is not None:
+    p = 0.
+    c = 0
+    f1,f2 = 22,22
+    for i in rgb2gray(canvas_result.image_data).T:
+        if sum(i) == 0 and p != 0:
+            f1 = c
+            break
+        c += 1
+        p = sum(i)
+    for i in rgb2gray(canvas_result.image_data).T[c:]:
+        if sum(i) != 0 and p == 0:
+            f2 = c
+            break
+        c += 1
+        p = sum(i)
+    cntr_ind = round((f1 + f2) / 2)
+    
+    # Result :)
+    st.subheader('This numbers are: {} and {} '.format(pre_image(rgb2gray(canvas_result.image_data)[:, :cntr_ind],model),
+                                    pre_image(rgb2gray(canvas_result.image_data)[:, cntr_ind:max(cntr_ind+200,400)],model)))
