@@ -9,7 +9,6 @@ import numpy as np
 from PIL import Image
 import streamlit as st
 from streamlit_drawable_canvas import st_canvas
-from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 
 st.markdown(""" <style> .font {
